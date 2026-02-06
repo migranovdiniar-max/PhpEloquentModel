@@ -1,10 +1,9 @@
-# Client / Server demo (Laravel)
+# Client / Server (Laravel) 
 
-Demo-проект на Laravel для управления клиентами и их серверами  
-(инфраструктурный use case).
+Проект для ТЗ - Laravel для управления клиентами и их серверами  
 
 ## Функциональность
-- Связанные модели Client → Server
+- Связанные модели Client (клиент) и Server (сервер)
 - Миграции базы данных
 - Seeder с тестовыми данными
 - Форма добавления сервера
@@ -51,8 +50,8 @@ php artisan migrate --seed
 php artisan serve
 
 ### 9. Открыть в браузере:
-http://127.0.0.1:8000/servers
-http://127.0.0.1:8000/servers/create
+- http://127.0.0.1:8000/servers
+- http://127.0.0.1:8000/servers/create
 
 ## Структура
 - Client hasMany Server
