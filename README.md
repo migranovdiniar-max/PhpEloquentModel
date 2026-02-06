@@ -31,11 +31,30 @@ composer install
 cp .env.example .env
 
 ### 4. Настроить подключение к БД в .env:
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=client_server
-DB_USERNAME=root
-DB_PASSWORD=
+- DB_CONNECTION=mysql
+- DB_HOST=127.0.0.1
+- DB_PORT=3306
+- DB_DATABASE=client_server
+- DB_USERNAME=root
+- DB_PASSWORD=
 
-### 5. Настроить подключение к БД в .env:
+### 5. Сгенерировать ключ приложения
+php artisan key:generate
+
+### 6. Создать базу данных
+CREATE DATABASE client_server;
+
+### 7. Выполнить миграции и сидинг
+php artisan migrate --seed
+
+### 8. Запустить приложение
+php artisan serve
+
+### 9. Открыть в браузере:
+http://127.0.0.1:8000/servers
+http://127.0.0.1:8000/servers/create
+
+## Структура
+- Client hasMany Server
+- Server belongsTo Client
+- Seeder создаёт 10 серверов с привязанными клиентами
