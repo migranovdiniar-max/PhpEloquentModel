@@ -41,6 +41,6 @@ class ServerController extends Controller
 
         return redirect()
             ->route("servers.index")
-            ->with("status", "Server created");
+            ->with("status", "Сервер успешно добавлен.");
     }
 }
