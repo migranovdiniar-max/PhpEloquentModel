@@ -3,62 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Server;
+use App\Models\Client;
 
 class ServerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $servers = Server::query()
+            ->with('client')
+            ->latest()
+            ->paginate(10);
+        
+        return view('servers.index', compact('servers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $clients = Client::query()
+            ->orderBy('name')
+            ->get(['id', 'name']);
+
+        return view('servers.create', compact('clients'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $data = $request->validate([
+            'client_id' => ['required', 'exists:clients,id'],
+            'hostname' => ['required', 'string', 'max:255'],
+            'ip_address' => ['required', 'ip'],
+            'os' => ['nullable', 'string', 'max:255'],
+            'status' => ['required', 'in:active,maintenance,offline'],
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        Server::create($data);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()
+            ->route("servers.index")
+            ->with("status", "Server created");
     }
 }
